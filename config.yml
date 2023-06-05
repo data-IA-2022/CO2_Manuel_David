@@ -1,0 +1,5 @@
+co2:
+  host: appco2-server.postgres.database.azure.com
+  user: adminCo2
+  password: K5W12P04YC02770Y$
+  database: co2
