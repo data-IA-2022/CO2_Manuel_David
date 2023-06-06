@@ -1,6 +1,16 @@
 from sodapy import Socrata
 import pandas as pd
 import numpy as np
+from yaml import safe_load
+from sqlalchemy import (
+    create_engine,
+    MetaData,
+    Table,
+    Column,
+    String,
+    )
+from sqlalchemy.schema import PrimaryKeyConstraint
+
 
 def get_api_df():
     cols = ['OSEBuildingID', 'DataYear', 'BuildingType', 'PrimaryPropertyType',
@@ -80,3 +90,21 @@ def format_df(df):
     df = df.replace('NULL', np.nan)
     df = df.astype(types)
     return df
+
+def get_engine(echo_arg):
+    yml_file = safe_load(open('config.yml'))
+
+    config = yml_file['co2']
+
+    host = config['host']
+    user = config['user']
+    password = config['password']
+    database = config['database']
+
+
+    url = f'postgresql+psycopg2://{user}:{password}@{host}/{database}'
+
+    engine = create_engine(url, echo=echo_arg)
+    return engine
+
+
