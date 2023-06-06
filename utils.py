@@ -2,14 +2,7 @@ from sodapy import Socrata
 import pandas as pd
 import numpy as np
 from yaml import safe_load
-from sqlalchemy import (
-    create_engine,
-    MetaData,
-    Table,
-    Column,
-    String,
-    )
-from sqlalchemy.schema import PrimaryKeyConstraint
+from sqlalchemy import create_engine
 
 
 def get_api_df():
