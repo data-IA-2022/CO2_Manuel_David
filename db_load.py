@@ -79,9 +79,9 @@ def main():
     with engine.connect() as conn:
         conn.execute(text("""ALTER TABLE buildings ADD PRIMARY KEY("OSEBuildingID");"""))
         conn.commit()
-print('Primary key has been added')
+        print('Primary key has been added')
 
     
-# if __name__=='__main__':
-#     main()
+if __name__=='__main__':
+    main()
 
