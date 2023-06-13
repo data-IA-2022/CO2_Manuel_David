@@ -1,7 +1,6 @@
 from sodapy import Socrata
 import pandas as pd
 import numpy as np
-from yaml import safe_load
 from sqlalchemy import create_engine
 from azure.identity import DefaultAzureCredential
 from azure.keyvault.secrets import SecretClient
