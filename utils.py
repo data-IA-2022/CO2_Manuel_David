@@ -94,7 +94,6 @@ def get_engine(echo_arg):
     password = config['password']
     database = config['database']
 
-
     url = f'postgresql+psycopg2://{user}:{password}@{host}/{database}'
 
     engine = create_engine(url, echo=echo_arg)
