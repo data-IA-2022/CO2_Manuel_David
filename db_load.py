@@ -1,5 +1,5 @@
 import pandas as pd
-from utils import get_api_df, format_df, get_engine, add_primary_key
+from utils import get_api_df, format_df, get_engine
 from sqlalchemy import ( 
     Integer, 
     String,  
