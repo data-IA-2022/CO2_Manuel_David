@@ -95,14 +95,6 @@ def get_secret():
     return secret.value
 
 def get_engine(echo_arg):
-    yml_file = safe_load(open('config.yml'))
-
-    config = yml_file['co2']
-
-    host = config['host']
-    user = config['user']
-    password = config['password']
-    database = config['database']
 
     url = get_secret()
 
