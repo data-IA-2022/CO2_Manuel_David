@@ -3,6 +3,8 @@ import pandas as pd
 import numpy as np
 from yaml import safe_load
 from sqlalchemy import create_engine
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
 
 
 def get_api_df():
@@ -84,6 +86,14 @@ def format_df(df):
     df = df.astype(types)
     return df
 
+def get_secret():
+    credential = DefaultAzureCredential()
+
+    secret_client = SecretClient(vault_url="https://co2-key-md.vault.azure.net/", credential=credential)
+    secret = secret_client.get_secret("URL-BDD")
+
+    return secret.value
+
 def get_engine(echo_arg):
     yml_file = safe_load(open('config.yml'))
 
@@ -94,7 +104,7 @@ def get_engine(echo_arg):
     password = config['password']
     database = config['database']
 
-    url = f'postgresql+psycopg2://{user}:{password}@{host}/{database}'
+    url = get_secret()
 
     engine = create_engine(url, echo=echo_arg)
     return engine
