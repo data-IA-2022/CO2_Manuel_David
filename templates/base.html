@@ -5,32 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %} - CO2-App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   {% endblock %}
 </head>
 <body>
-  <nav class="navbar navbar-default">
-    <ul class="nav navbar-nav">
-      <li><a href="#0">Home</a></li>
-      <li><a href="#0">About</a></li>
-      <li class="dropdown">
-        <a href="#0" class="dropdown-toggle" data-toggle="dropdown" data-target="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clients<span class="caret"></span></a>
-        <ul class="dropdown-menu" id="dropdon-menu">
-          <li><a href="#0">Burger King</a></li>
-          <li><a href="#0">Southwest Airlines</a></li>
-          <li><a href="#0">Levi Strauss</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a href="#0" class="dropdown-toggle" data-toggle="dropdown" data-target="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
-        <ul class="dropdown-menu" id="dropdon-menu">
-          <li><a href="#0">Print Design</a></li>
-          <li><a href="#0">Web Design</a></li>
-          <li><a href="#0">Mobile App Development</a></li>
-        </ul>
-      </li>
-      <li><a href="#0">Contact</a></li>
-    </ul>
-  </nav>
+  <div>
+    <nav class="navbar">
+      <ul class="nav--list">
+        <li class="item"><a href="#">Home</a></li>
+        <li class="item"><a href="/report">Report</a></li>
+        <li class="item"><a href="http://co2-md.francecentral.cloudapp.azure.com/projects/CO2/flow/">DataIku</a></li>
+        <li class="item"><a href="https://github.com/data-IA-2022/CO2_Manuel_David">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+  
   <div id="content">{% block content %}{% endblock %}</div>
     <div id="footer">
       {% block footer %}

@@ -4,5 +4,10 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route("/")
-def hello():
+def index():
     return render_template('home.html')
+
+@app.route("/report")
+def report():
+    return render_template('report.html')
+
