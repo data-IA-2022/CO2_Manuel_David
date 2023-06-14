@@ -2,8 +2,7 @@ from sodapy import Socrata
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
-from azure.identity import DefaultAzureCredential
-from azure.keyvault.secrets import SecretClient
+from os import getenv
 
 
 def get_api_df():
@@ -85,17 +84,10 @@ def format_df(df):
     df = df.astype(types)
     return df
 
-def get_secret():
-    credential = DefaultAzureCredential()
-
-    secret_client = SecretClient(vault_url="https://co2-key-md.vault.azure.net/", credential=credential)
-    secret = secret_client.get_secret("URL-BDD")
-
-    return secret.value
 
 def get_engine(echo_arg):
 
-    url = get_secret()
+    url = getenv('URL_POSTGRES')
 
     engine = create_engine(url, echo=echo_arg)
     return engine
