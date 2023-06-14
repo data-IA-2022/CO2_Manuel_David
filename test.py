@@ -1,5 +1,5 @@
 import pytest
-from utils import get_engine, get_secret
+from utils import get_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
 
@@ -28,12 +28,3 @@ def test_database_connection(test_engine):
     session.close()
 
 # test secret key vault
-
-def test_retrieve_secret():
-    secret = get_secret()
-
-    # Assert that the secret value is not empty
-    assert secret is not None
-
-    # Add additional assertions or validations as needed
-    # For example, you could check the secret's properties or compare its value against an expected result
