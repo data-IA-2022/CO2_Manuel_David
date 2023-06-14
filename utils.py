@@ -2,7 +2,7 @@ from sodapy import Socrata
 import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine
-from os import environ
+import os
 
 
 def get_api_df():
@@ -86,8 +86,9 @@ def format_df(df):
 
 
 def get_engine(echo_arg):
+    print(os.environ)
 
-    url = environ.get('POSTGRESQLCONNSTR_URL')
+    url = os.environ.get('POSTGRESQLCONNSTR_URL')
 
     engine = create_engine(url, echo=echo_arg)
     return engine
