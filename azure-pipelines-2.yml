@@ -27,4 +27,6 @@ steps:
 - script: |
     pip install pytest pytest-azurepipelines
     pytest test.py
+  env: 
+    POSTGRES_URL: $(POSTGRES_URL)
   displayName: 'pytest'
