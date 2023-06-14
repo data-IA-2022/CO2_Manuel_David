@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - CO2-App</title>
+  {% endblock %}
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+      <li><a href="#0">Home</a></li>
+      <li><a href="#0">About</a></li>
+      <li class="dropdown">
+        <a href="#0" class="dropdown-toggle" data-toggle="dropdown" data-target="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clients<span class="caret"></span></a>
+        <ul class="dropdown-menu" id="dropdon-menu">
+          <li><a href="#0">Burger King</a></li>
+          <li><a href="#0">Southwest Airlines</a></li>
+          <li><a href="#0">Levi Strauss</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#0" class="dropdown-toggle" data-toggle="dropdown" data-target="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
+        <ul class="dropdown-menu" id="dropdon-menu">
+          <li><a href="#0">Print Design</a></li>
+          <li><a href="#0">Web Design</a></li>
+          <li><a href="#0">Mobile App Development</a></li>
+        </ul>
+      </li>
+      <li><a href="#0">Contact</a></li>
+    </ul>
+  </nav>
+  <div id="content">{% block content %}{% endblock %}</div>
+    <div id="footer">
+      {% block footer %}
+      &copy; Copyright 2010 by <a href="http://domain.invalid/">you</a>.
+      {% endblock %}
+    </div>
+</body>
+</html>
+
