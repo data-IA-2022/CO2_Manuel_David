@@ -87,7 +87,7 @@ def format_df(df):
 
 def get_engine(echo_arg):
 
-    url = getenv('URL_POSTGRES')
+    url = getenv('POSTGRESQLCONNSTR_URL')
 
     engine = create_engine(url, echo=echo_arg)
     return engine
