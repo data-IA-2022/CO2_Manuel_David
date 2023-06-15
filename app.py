@@ -11,3 +11,7 @@ def index():
 def report():
     return render_template('report.html')
 
+@app.route("/prediction")
+def predict():
+    return render_template('prediction.html')
+
