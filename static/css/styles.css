@@ -20,7 +20,7 @@ nav {
   align-items: center;
   padding: 10px 20px;
   height: 80px;
-  width: 700px;
+  width: 1000px;
   border-radius: 10px;
   background: #003b49;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 15px 20px -5px;
@@ -184,17 +184,4 @@ a {
 
 .form-wrap .bottom-text a:hover {
   text-decoration: underline;
-}
-
-footer {
-  text-align: center;
-  margin-top: 15px;
-}
-
-footer a {
-  color: #49c1a2;
-}
-
-footer a:hover {
-  color: #37a08e;
 }
