@@ -1,7 +1,7 @@
 from sodapy import Socrata
 import pandas as pd
 import numpy as np
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 import os
 
 
@@ -91,5 +91,11 @@ def get_engine(echo_arg):
 
     engine = create_engine(url, echo=echo_arg)
     return engine
+
+def get_df_from_db(engine):
+    with engine.begin() as conn:
+        query = text("""SELECT * FROM "CO2_selected_colums_for_lm_no_outlier_prepared_6_colums"; """)
+        df = pd.read_sql(query, conn)
+    return df
 
 
