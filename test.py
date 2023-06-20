@@ -2,11 +2,16 @@ import pytest
 from utils import get_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
+import joblib
+import dotenv
+from sklearn.multioutput import MultiOutputRegressor
 
 # test connection to database
 
 @pytest.fixture
 def test_engine():
+    # en local
+    dotenv.load_dotenv()
     # Create an in-memory SQLite database for testing
     engine = get_engine(echo_arg=True)
     yield engine
@@ -27,4 +32,6 @@ def test_database_connection(test_engine):
     # Clean up: close the session
     session.close()
 
-# test secret key vault
+def test_pikle_file():
+    model = joblib.load('model.pkl')
+    assert isinstance(model, MultiOutputRegressor)
