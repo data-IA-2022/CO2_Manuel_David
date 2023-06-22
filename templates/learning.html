@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Learing Curve{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+  <h1>Learning Curve</h1>
+  <div class="image-container">
+    {% for image in images %}
+      <img class="image-item" src="{{ image }}" alt="graph">
+    {% endfor %}
+  </div>
+{% endblock %}
