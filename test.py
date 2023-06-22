@@ -12,7 +12,6 @@ from sklearn.multioutput import MultiOutputRegressor
 def test_engine():
     # en local
     dotenv.load_dotenv()
-    # Create an in-memory SQLite database for testing
     engine = get_engine(echo_arg=True)
     yield engine
     # Teardown: close the database connection

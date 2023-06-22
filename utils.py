@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np
 from sqlalchemy import create_engine, text
 import os
+import matplotlib.pyplot as plt
+from sklearn.model_selection import learning_curve
+import numpy as np
 
 
 def get_api_df():
@@ -97,5 +100,25 @@ def get_df_from_db(engine):
         query = text("""SELECT * FROM "CO2_selected_colums_for_lm_no_outlier_prepared_6_colums"; """)
         df = pd.read_sql(query, conn)
     return df
+
+def plot_learning_curve(train_sizes, train_scores, test_scores, title, alpha=0.1):
+    train_mean = np.mean(train_scores, axis=1)
+    train_std = np.std(train_scores, axis=1)
+    test_mean = np.mean(test_scores, axis=1)
+    test_std = np.std(test_scores, axis=1)
+    plt.plot(train_sizes, train_mean, label='train score', color='blue', marker='o')
+    plt.fill_between(train_sizes, train_mean + train_std,
+                     train_mean - train_std, color='blue', alpha=alpha)
+    plt.plot(train_sizes, test_mean, label='test score', color='red', marker='o')
+
+    plt.fill_between(train_sizes, test_mean + test_std, test_mean - test_std, color='red', alpha=alpha)
+    plt.title(title)
+    plt.xlabel('Number of training points')
+    plt.ylabel('R2-score')
+    plt.grid(ls='--')
+    plt.legend(loc='best')
+    fn = f'static/img/{title}.png'
+    plt.savefig(fn)
+    plt.show()
 
 
