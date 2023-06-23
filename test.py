@@ -32,5 +32,5 @@ def test_database_connection(test_engine):
     session.close()
 
 def test_pikle_file():
-    model = joblib.load('model.pkl')
+    model = joblib.load('models/mlp.pkl')
     assert isinstance(model, MultiOutputRegressor)
