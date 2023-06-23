@@ -15,15 +15,18 @@
 }
 
 nav {
+  overflow: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px 20px;
   height: 80px;
-  width: 1000px;
+  width: 100%; /* Full width */
   border-radius: 10px;
   background: #003b49;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 15px 20px -5px;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
 }
 
 .nav--list {
@@ -93,6 +96,10 @@ nav {
 
 .item:nth-child(4):hover:before {
   height: 100%;
+}
+
+.title, embed, #content {
+  margin-top: 100px
 }
 
 @import url('https://fonts.googleapis.com/css?family=Raleway');

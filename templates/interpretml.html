@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+<div class="interpretml">
+  <form method='POST'>
+    <label for="models">Model</label>
+    <select name="models" id="models">
+      {% for option in options %}
+        <option value="{{ option }}">{{ option }}</option>
+      {% endfor %}
+    </select>
+    <label for="targets">
+      <select name="targets" id="targets">
+        {% for target in targets %}
+          <option value="{{ target }}">{{ target }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <button type="submit">Submit</button>
+  </form>
+  {% if method == 'POST' %}
+  <iframe src="{{ plot_iml }}" width=100% height=800 frameBorder="0"></iframe>
+  {% endif %}
+</div>
+{% endblock %}

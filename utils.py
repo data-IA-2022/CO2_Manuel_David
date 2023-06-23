@@ -6,6 +6,7 @@ import os
 import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
 import numpy as np
+from interpret import perf, show, show_link
 
 
 def get_api_df():
@@ -121,4 +122,12 @@ def plot_learning_curve(train_sizes, train_scores, test_scores, title, alpha=0.1
     plt.savefig(fn)
     plt.show()
 
+def interpret_model(model, X_cols, X_train, y_train, X_test, y_test):
+    model.fit(X_train, y_train)
+    ebm_global = model.explain_global()
+    ebm_local = model.explain_local(X_test, y_test)
+    regression_perf = perf.RegressionPerf(model.predict, feature_names=X_cols)
+    regression_explanation = regression_perf.explain_perf(X_test, y_test)
+    show([ebm_global, ebm_local, regression_explanation])
+    return show_link([ebm_global, ebm_local, regression_explanation])
 
