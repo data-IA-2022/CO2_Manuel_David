@@ -128,6 +128,6 @@ def interpret_model(model, X_cols, X_train, y_train, X_test, y_test):
     ebm_local = model.explain_local(X_test, y_test)
     regression_perf = perf.RegressionPerf(model.predict, feature_names=X_cols)
     regression_explanation = regression_perf.explain_perf(X_test, y_test)
-    show([ebm_global, ebm_local, regression_explanation])
+    # show([ebm_global, ebm_local, regression_explanation])
     return show_link([ebm_global, ebm_local, regression_explanation])
 

@@ -10,11 +10,20 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, RobustScaler
 from sklearn.model_selection import train_test_split
 from interpret.glassbox import ExplainableBoostingRegressor, RegressionTree, LinearRegression
-
+from urllib.parse import urlsplit, urlunsplit
 
 app = Flask(__name__)
 
 dotenv.load_dotenv()
+
+def format_interpret_url(url):
+    parsed = list(urlsplit(url))
+    parsed_host = parsed[1].split(':')
+    parsed_host[0] = 'co2-app.azurewebsites.net'
+    new_host = ':'.join(parsed_host)
+    parsed[1] = new_host
+    return urlunsplit(parsed)
+    
 
 @app.route("/")
 def index():
@@ -95,13 +104,14 @@ def display_interpret():
 
         for model, name in zip(models, model_names):
             if name == request.form['models']:
-                plot_iml = interpret_model(model, names, df_train, y_train, df_test, y_test)
+                url = interpret_model(model, names, df_train, y_train, df_test, y_test)
+                new_url = format_interpret_url(url)
                 return render_template(
                     'interpretml.html', 
                     options=model_names, 
                     targets=target_names, 
                     method=request.method,
-                    plot_iml=plot_iml
+                    plot_iml=new_url
                     )
     return render_template(
         'interpretml.html', 
