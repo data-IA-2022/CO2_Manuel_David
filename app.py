@@ -105,13 +105,12 @@ def display_interpret():
         for model, name in zip(models, model_names):
             if name == request.form['models']:
                 url = interpret_model(model, names, df_train, y_train, df_test, y_test)
-                new_url = format_interpret_url(url)
                 return render_template(
                     'interpretml.html', 
                     options=model_names, 
                     targets=target_names, 
                     method=request.method,
-                    plot_iml=new_url
+                    plot_iml=url
                     )
     return render_template(
         'interpretml.html', 
