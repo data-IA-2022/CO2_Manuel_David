@@ -104,7 +104,9 @@ def display_interpret():
 
         for model, name in zip(models, model_names):
             if name == request.form['models']:
-                url = interpret_model(model, names, df_train, y_train, df_test, y_test)
+                port = np.random.randint(7000, 8000)
+                print(port)
+                url = interpret_model(model, names, df_train, y_train, df_test, y_test, port)
                 return render_template(
                     'interpretml.html', 
                     options=model_names, 
