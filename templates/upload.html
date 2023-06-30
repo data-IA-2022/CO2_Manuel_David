@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Prediction on your data{% endblock %}
+{% block head %}
+  {{ super() }}
+  <style type="text/css">
+    .important { color: #336699; }
+  </style>
+{% endblock %}
+{% block content %}
+  <h1 class='title'>Upload</h1>
+  <div class="upload-container">
+    <form method="POST" enctype='multipart/form-data'>
+      <label for="upload"></label>
+      <input class='csv-input' type="file" id='upload' name='upload' accept=".xlsx, .xls, .csv"/>
+      <button class='pred-btn' type="submit">Prediction</button>
+    </form>
+  </div>
+  {% if method =='POST' %}
+    {% for table in tables %}
+      {{ titles[loop.index] }}
+      {{ table|safe }}
+    {% endfor %}
+  {% endif %}
+{% endblock %}

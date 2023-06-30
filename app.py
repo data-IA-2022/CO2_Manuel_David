@@ -23,6 +23,17 @@ def format_interpret_url(url):
     new_host = ':'.join(parsed_host)
     parsed[1] = new_host
     return urlunsplit(parsed)
+
+def tf_num_to_bool(x):
+    if x > 0:
+        return True
+    else:
+        return False
+def format_updload_data(df):
+    bool_cols = ['SteamUse(kBtu)', 'NaturalGas(kBtu)']
+    df[bool_cols] = df[bool_cols].apply(lambda x: x.apply(lambda x: True if x > 0 else False))
+    return df
+    
     
 
 @app.route("/")
@@ -67,6 +78,47 @@ def display_diapo():
     path = 'static/pdf/CO2-MD-diapo.pdf'
     return render_template('display_diapo.html', pdf=path)
 
+@app.route('/upload', methods=['GET', 'POST'])
+def display_upload():
+    if request.method == 'POST':
+        fn = request.files.get("upload", None)
+        df = pd.read_csv(fn, sep=';')
+        df_test = df[['BuildingType', 
+                      'PrimaryPropertyType',
+                      'LargestPropertyUseTypeGFA', 
+                      'SteamUse(kBtu)',
+                      'NaturalGas(kBtu)',
+                      'SiteEnergyUse(kBtu)', 
+                      'TotalGHGEmissions']]
+        df_test = format_updload_data(df_test)
+        df_test = df_test.rename(columns={
+            'SteamUse(kBtu)': 'Have_Stream_Energy',
+            'NaturalGas(kBtu)': 'Have_NaturalGas_Energy',
+            'SiteEnergyUse(kBtu)': 'SiteEnergyUse_kBtu_',
+        })
+        df_test['LargestPropertyUseTypeGFA_log'] = df_test['LargestPropertyUseTypeGFA'].apply(lambda x: np.log10(x))
+        X = df_test[['BuildingType', 
+                'PrimaryPropertyType',
+                'LargestPropertyUseTypeGFA_log', 
+                'Have_Stream_Energy',
+                'Have_NaturalGas_Energy']]
+        
+        model = joblib.load('models/mlp.pkl')
+        predictions = model.predict(X)
+        co2, nrj = [], []
+        for prediction in predictions:
+            value1, value2 = np.exp(2.303 * prediction[0]), np.exp(2.303 * prediction[1])
+            co2.append(value1)
+            nrj.append(value2)
+        df_test['Emissions_predicted'] = co2
+        df_test['Consommation_predicted'] = nrj
+        return render_template(
+            'upload.html', 
+            tables=[df_test.to_html(classes='data')], 
+            titles=df_test.columns.values,
+            method=request.method
+        )
+    return render_template('upload.html', method=request.method)
 @app.route('/interpret', methods=['GET', 'POST'])
 def display_interpret():
     engine = get_engine(echo_arg=True)
