@@ -46,6 +46,9 @@ def report():
 
 @app.route("/predict", methods=['GET', 'POST'])
 def predict():
+    df = get_df_from_db(get_engine(echo_arg=True))
+    primary_types = df['PrimaryPropertyType'].unique()
+    building_types = df['BuildingType'].unique()
     data = {}
     if request.method=='POST':
         data['LargestPropertyUseTypeGFA_log'] = np.log10(float(request.form['superficie']))
@@ -62,9 +65,18 @@ def predict():
         co2, nrj = np.exp(2.303 * value1), np.exp(2.303 * value2)
         results = [np.round(co2, 2), np.round(nrj, 2)]
         
-        return render_template('prediction.html', results = results, method=request.method)
+        return render_template(
+            'prediction.html', 
+            results = results, 
+            method=request.method,
+            primary_types=primary_types,
+            buiding_types=building_types)
         
-    return render_template('prediction.html', method = request.method)
+    return render_template(
+        'prediction.html', 
+        method=request.method,
+        primary_types=primary_types,
+        buiding_types=building_types)
 
 @app.route('/model')
 def learning_curve_display():
@@ -119,6 +131,7 @@ def display_upload():
             method=request.method
         )
     return render_template('upload.html', method=request.method)
+
 @app.route('/interpret', methods=['GET', 'POST'])
 def display_interpret():
     engine = get_engine(echo_arg=True)

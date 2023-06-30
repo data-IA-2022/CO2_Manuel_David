@@ -22,20 +22,19 @@
         </div>
         <div class="form-group">
           <label for="util">Principale utilisation</label>
-          <input 
-            type="text" 
-            name="util" 
-            id="util" 
-            placeholder='Utilisation principale' 
-            required>
+          <select name="util" id="util" required>
+            {% for type in primary_types %}
+              <option value="{{ type }}">{{ type }}</option>
+            {% endfor %}
+          </select>
         </div>
         <div class="form-group">
           <label for="type">Building type</label>
-          <input type="txt" 
-            name="type" 
-            id="type" 
-            placeholder='Building type'
-            required>
+          <select name="type" id="type">
+            {% for type in buiding_types %}
+              <option value="{{ type }}">{{ type }}</option>
+            {% endfor %}
+          </select>
         </div>
         <div class="form-group">
           <label for="gaz">Gaz</label>
