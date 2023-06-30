@@ -9,15 +9,14 @@
 {% block content %}
   <h1 class='title'>Upload</h1>
   <div class="upload-container">
-    <form method="POST" enctype='multipart/form-data'>
-      <label for="upload"></label>
+    <form class='upload-form' method="POST" enctype='multipart/form-data'>
+      <label for="upload" class='upload-label'></label>
       <input class='csv-input' type="file" id='upload' name='upload' accept=".xlsx, .xls, .csv"/>
       <button class='pred-btn' type="submit">Prediction</button>
     </form>
   </div>
   {% if method =='POST' %}
     {% for table in tables %}
-      {{ titles[loop.index] }}
       {{ table|safe }}
     {% endfor %}
   {% endif %}
