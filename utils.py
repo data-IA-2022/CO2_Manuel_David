@@ -6,8 +6,11 @@ import os
 import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
 import numpy as np
+from dotenv import load_dotenv
 from interpret import perf, show_link, set_visualize_provider, show
 from interpret.provider import AutoVisualizeProvider
+
+load_dotenv()
 
 
 def get_api_df():
@@ -93,7 +96,7 @@ def format_df(df):
 def get_engine(echo_arg):
 
     url = os.environ['POSTGRES_URL']
-
+    print(url)
     engine = create_engine(url, echo=echo_arg)
     return engine
 

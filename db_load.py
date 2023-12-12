@@ -1,5 +1,6 @@
 import pandas as pd
 from utils import get_api_df, format_df, get_engine
+
 from sqlalchemy import ( 
     Integer,
     String,  
@@ -10,10 +11,11 @@ from sqlalchemy import (
     text
 )
 
+
 def main():
     
     engine = get_engine(echo_arg=True)
-
+    print(engine)
     df = format_df(get_api_df())
         
     types = {
@@ -74,14 +76,26 @@ def main():
         dtype=types
         )
     
+    df_2020 = pd.read_csv('/home/dakoro/Data_IA/TP/CO2_Manuel_David/data/2020_Building_Energy_Benchmarking.csv')
+    df_2020.to_sql(
+        'buildings_2020',
+        engine,
+        method='multi',
+        if_exists='replace',
+        index=False,
+        dtype=types,
+        schema='public'
+        
+    )
     print('The database has been loaded')
     
     with engine.connect() as conn:
         conn.execute(text("""ALTER TABLE buildings ADD PRIMARY KEY("OSEBuildingID");"""))
+        conn.execute(text("""ALTER TABLE buildings_2020 ADD PRIMARY KEY("OSEBuildingID");"""))
         conn.commit()
         print('Primary key has been added')
 
-    
+
 if __name__=='__main__':
     main()
 

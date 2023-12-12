@@ -2,6 +2,7 @@ from utils import get_df_from_db, get_engine
 from ydata_profiling import ProfileReport
 import dotenv
 
+
 def main():
     dotenv.load_dotenv()
     # create report.html
@@ -12,5 +13,8 @@ def main():
     profile = ProfileReport(df, title="Profiling Report")
     profile.to_file("templates/report.html")
     print('report.html has been generated')
+   
+
+
 if __name__=='__main__':
     main()
