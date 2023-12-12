@@ -96,7 +96,6 @@ def format_df(df):
 def get_engine(echo_arg):
 
     url = os.environ['POSTGRES_URL']
-    print(url)
     engine = create_engine(url, echo=echo_arg)
     return engine
 
