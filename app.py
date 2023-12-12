@@ -9,12 +9,17 @@ from utils import get_engine, get_df_from_db, interpret_model
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, RobustScaler
 from sklearn.model_selection import train_test_split
-from interpret.glassbox import ExplainableBoostingRegressor, RegressionTree, LinearRegression
+from interpret.glassbox import (
+    ExplainableBoostingRegressor,
+    RegressionTree,
+    LinearRegression
+    )
 from urllib.parse import urlsplit, urlunsplit
 
 app = Flask(__name__)
 
 dotenv.load_dotenv()
+
 
 def format_interpret_url(url):
     parsed = list(urlsplit(url))
@@ -24,25 +29,29 @@ def format_interpret_url(url):
     parsed[1] = new_host
     return urlunsplit(parsed)
 
+
 def tf_num_to_bool(x):
     if x > 0:
         return True
     else:
         return False
+
+
 def format_updload_data(df):
     bool_cols = ['SteamUse(kBtu)', 'NaturalGas(kBtu)']
     df[bool_cols] = df[bool_cols].apply(lambda x: x.apply(lambda x: True if x > 0 else False))
     return df
-    
-    
+
 
 @app.route("/")
 def index():
     return render_template('home.html')
 
+
 @app.route("/report")
 def report():
     return render_template('report.html')
+
 
 @app.route("/predict", methods=['GET', 'POST'])
 def predict():
@@ -50,7 +59,7 @@ def predict():
     primary_types = df['PrimaryPropertyType'].unique()
     building_types = df['BuildingType'].unique()
     data = {}
-    if request.method=='POST':
+    if request.method == 'POST':
         data['LargestPropertyUseTypeGFA_log'] = np.log10(float(request.form['superficie']))
         data['PrimaryPropertyType'] = request.form['util']
         data['BuildingType'] = request.form['type']
@@ -78,12 +87,14 @@ def predict():
         primary_types=primary_types,
         buiding_types=building_types)
 
+
 @app.route('/model')
 def learning_curve_display():
     path = 'static/img'
     fns = [os.path.join(path, fn) for fn in os.listdir(path)]
     print(fns)
     return render_template('learning.html', images=fns)
+
 
 @app.route('/diapo')
 def display_diapo():
@@ -109,11 +120,13 @@ def display_upload():
             'SiteEnergyUse(kBtu)': 'SiteEnergyUse_kBtu_',
         })
         df_test['LargestPropertyUseTypeGFA_log'] = df_test['LargestPropertyUseTypeGFA'].apply(lambda x: np.log10(x))
-        X = df_test[['BuildingType', 
-                'PrimaryPropertyType',
-                'LargestPropertyUseTypeGFA_log', 
-                'Have_Stream_Energy',
-                'Have_NaturalGas_Energy']]
+        X = df_test[[
+            'BuildingType',
+            'PrimaryPropertyType',
+            'LargestPropertyUseTypeGFA_log', 
+            'Have_Stream_Energy',
+            'Have_NaturalGas_Energy'
+        ]]
         
         model = joblib.load('models/mlp.pkl')
         predictions = model.predict(X)
@@ -131,6 +144,7 @@ def display_upload():
             method=request.method
         )
     return render_template('upload.html', method=request.method)
+
 
 @app.route('/interpret', methods=['GET', 'POST'])
 def display_interpret():
